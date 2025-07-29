@@ -1,0 +1,182 @@
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  padding: 1rem;
+}
+
+.register-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.register-header h1 {
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.register-header p {
+  color: #666;
+  font-size: 1rem;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.register-form .form-group {
+  position: relative;
+}
+
+.register-form .input-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.register-form .input-icon-register svg,
+.register-form .input-icon-register > * {
+  position: absolute;
+
+  left: 0.5rem;
+  top: 30%;
+  color: #666;
+  font-size: 1.125rem;
+  z-index: 99;
+  pointer-events: none;
+
+}
+.input-icon-register .input-icon-register svg {
+  transform: translateX(-50%)!important;  
+}
+
+/* Override any global input styles */
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="tel"],
+.register-form input[type="password"] {
+  width: 100% !important;
+  padding: 0.875rem 1rem 0.875rem  !important;
+  padding-left: 3.5rem !important;
+  margin-left: -1.5rem !important;
+  border: 1px solid #e1e5e9 !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  transition: all 0.2s ease !important;
+  background: #f8f9fa !important;
+  color: #333 !important;
+  outline: none !important;
+  position: relative !important;
+  z-index: 2 !important;
+  cursor: text !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  pointer-events: auto !important;
+  line-height: 1.5 !important;
+}
+
+.register-form input[type="text"]:focus,
+.register-form input[type="email"]:focus,
+.register-form input[type="tel"]:focus,
+.register-form input[type="password"]:focus {
+  outline: none !important;
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1) !important;
+  background: white !important;
+}
+
+.register-form input[type="text"]::placeholder,
+.register-form input[type="email"]::placeholder,
+.register-form input[type="tel"]::placeholder,
+.register-form input[type="password"]::placeholder {
+  color: #666 !important;
+}
+
+.register-btn {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  border: none;
+  padding: 0.875rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 1rem;
+}
+
+.register-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(14, 165, 233, 0.4);
+}
+
+.register-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.register-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.register-footer p {
+  color: #666;
+  margin: 0;
+}
+
+.login-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.login-link:hover {
+  color: var(--primary-dark);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .register-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .register-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .register-form input[type="text"],
+  .register-form input[type="email"],
+  .register-form input[type="tel"],
+  .register-form input[type="password"] {
+    padding: 0.75rem 1rem 0.75rem 0 !important;
+    padding-left: 2.25rem !important;
+    margin-left: -1.25rem !important;
+    font-size: 0.875rem !important;
+  }
+  
+  .register-form .input-icon svg,
+  .register-form .input-icon > * {
+    font-size: 1rem;
+    left: 0.5rem;
+  }
+} 

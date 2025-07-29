@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .upload-form { border: 2px dashed #ccc; padding: 20px; margin: 20px 0; }
+        .result { margin: 20px 0; padding: 10px; background: #f0f0f0; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>🖼️ Image Upload Test</h1>
+    <p>This page tests the Cloudinary image upload functionality.</p>
+    
+    <div class="upload-form">
+        <h3>Upload Image</h3>
+        <input type="file" id="imageInput" accept="image/*">
+        <button onclick="uploadImage()">Upload to Cloudinary</button>
+    </div>
+    
+    <div class="result" id="result">
+        <h3>Result:</h3>
+        <p>No upload yet...</p>
+    </div>
+
+    <script>
+        async function uploadImage() {
+            const fileInput = document.getElementById('imageInput');
+            const resultDiv = document.getElementById('result');
+            
+            if (!fileInput.files[0]) {
+                resultDiv.innerHTML = '<h3>Result:</h3><p style="color: red;">Please select a file first!</p>';
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('images', file);
+            
+            resultDiv.innerHTML = '<h3>Result:</h3><p>Uploading...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/admin/products', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'x-auth-token': 'test-token' // This will fail auth but we can see the upload attempt
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `
+                        <h3>Result:</h3>
+                        <p style="color: green;">✅ Upload successful!</p>
+                        <p><strong>Product:</strong> ${data.name || 'Test Product'}</p>
+                        <p><strong>Images:</strong></p>
+                        <ul>
+                            ${data.images ? data.images.map(img => `<li><a href="${img}" target="_blank">${img}</a></li>`).join('') : 'No images'}
+                        </ul>
+                    `;
+                } else {
+                    const errorData = await response.json();
+                    resultDiv.innerHTML = `
+                        <h3>Result:</h3>
+                        <p style="color: orange;">⚠️ Upload attempted but failed:</p>
+                        <p><strong>Status:</strong> ${response.status}</p>
+                        <p><strong>Message:</strong> ${errorData.message || 'Unknown error'}</p>
+                        <p><em>Note: This might be due to authentication. Check server logs for upload details.</em></p>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <h3>Result:</h3>
+                    <p style="color: red;">❌ Error: ${error.message}</p>
+                    <p><em>Make sure the backend server is running on port 5000</em></p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html> 
