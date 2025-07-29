@@ -14,6 +14,7 @@ import {
   FiLogOut,
   FiBarChart
 } from 'react-icons/fi';
+import ariosLogo from '../../Assets/Arios Logo.png';
 import './Layout.css';
 
 const Layout = ({ children }) => {
@@ -98,6 +99,21 @@ const Layout = ({ children }) => {
     <div className="layout">
       {/* Sidebar */}
       <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+        {/* Logo Section */}
+        <div className="sidebar-header">
+          <div className="logo-container">
+            <div className="logo-icon">
+              <img src={ariosLogo} alt="Arios Logo" className="logo-image" />
+            </div>
+          </div>
+          <button 
+            className="sidebar-close"
+            onClick={() => setSidebarOpen(false)}
+          >
+            &times;
+          </button>
+        </div>
+        
         <nav className="sidebar-nav">
           {filteredNavigation.map((item) => {
             const Icon = item.icon;
