@@ -36,9 +36,11 @@ const CustomerLayout = ({ children }) => {
       <header className="customer-header">
         <div className="header-content">
           <div className="header-left">
-            <button className="menu-button" onClick={toggleSidebar}>
-              <FiMenu />
-            </button>
+            {user?.role !== 'delivery' && (
+              <button className="menu-button" onClick={toggleSidebar}>
+                <FiMenu />
+              </button>
+            )}
             <img src={ariosLogo} alt="Arios Logo" className="logo" />
           </div>
 
@@ -73,60 +75,62 @@ const CustomerLayout = ({ children }) => {
         </div>
       </header>
 
-      {/* Sidebar */}
-      <div className={`customer-sidebar ${sidebarOpen ? 'open' : ''}`}>
-        <div className="sidebar-header">
-          <h2>Arios Shop</h2>
-          <button className="sidebar-close" onClick={closeSidebar}>
-            <FiX />
-          </button>
-        </div>
+      {/* Sidebar - Hidden for delivery role */}
+      {user?.role !== 'delivery' && (
+        <div className={`customer-sidebar ${sidebarOpen ? 'open' : ''}`}>
+          <div className="sidebar-header">
+            <h2>Arios Shop</h2>
+            <button className="sidebar-close" onClick={closeSidebar}>
+              <FiX />
+            </button>
+          </div>
 
-        <nav className="sidebar-nav">
-          <Link
-            to="/customer-products"
-            className={`nav-link ${isActive('/customer-products') ? 'active' : ''}`}
-            onClick={closeSidebar}
-          >
-            <FiHome />
-            <span>Shop Products</span>
-          </Link>
+          <nav className="sidebar-nav">
+            <Link
+              to="/customer-products"
+              className={`nav-link ${isActive('/customer-products') ? 'active' : ''}`}
+              onClick={closeSidebar}
+            >
+              <FiHome />
+              <span>Shop Products</span>
+            </Link>
 
-          <Link
-            to="/customer-cart"
-            className={`nav-link ${isActive('/customer-cart') ? 'active' : ''}`}
-            onClick={closeSidebar}
-          >
-            <FiShoppingCart />
-            <span>My Cart</span>
-            {getTotalItems() > 0 && (
-              <span className="nav-badge">{getTotalItems()}</span>
-            )}
-          </Link>
+            <Link
+              to="/customer-cart"
+              className={`nav-link ${isActive('/customer-cart') ? 'active' : ''}`}
+              onClick={closeSidebar}
+            >
+              <FiShoppingCart />
+              <span>My Cart</span>
+              {getTotalItems() > 0 && (
+                <span className="nav-badge">{getTotalItems()}</span>
+              )}
+            </Link>
 
-          <Link
-            to="/customer-orders"
-            className={`nav-link ${isActive('/customer-orders') ? 'active' : ''}`}
-            onClick={closeSidebar}
-          >
-            <FiFileText />
-            <span>My Orders</span>
-          </Link>
-        </nav>
+            <Link
+              to="/customer-orders"
+              className={`nav-link ${isActive('/customer-orders') ? 'active' : ''}`}
+              onClick={closeSidebar}
+            >
+              <FiFileText />
+              <span>My Orders</span>
+            </Link>
+          </nav>
 
-        <div className="sidebar-footer">
-          <div className="user-profile">
-            <FiUser />
-            <div>
-              <p className="user-name">{user?.name || 'Customer'}</p>
-              <p className="user-email">{user?.email}</p>
+          <div className="sidebar-footer">
+            <div className="user-profile">
+              <FiUser />
+              <div>
+                <p className="user-name">{user?.name || 'Customer'}</p>
+                <p className="user-email">{user?.email}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* Overlay */}
-      {sidebarOpen && (
+      {/* Overlay - Hidden for delivery role */}
+      {sidebarOpen && user?.role !== 'delivery' && (
         <div className="sidebar-overlay" onClick={closeSidebar}></div>
       )}
 

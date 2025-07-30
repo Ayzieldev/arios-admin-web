@@ -96,53 +96,57 @@ const Layout = ({ children }) => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="layout">
-      {/* Sidebar */}
-      <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-        {/* Logo Section */}
-        <div className="sidebar-header">
-          <div className="logo-container">
-            <div className="logo-icon">
-              <img src={ariosLogo} alt="Arios Logo" className="logo-image" />
+    <div className={`layout ${user?.role === 'delivery' ? 'delivery-layout' : ''}`}>
+      {/* Sidebar - Hidden for delivery role */}
+      {user?.role !== 'delivery' && (
+        <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+          {/* Logo Section */}
+          <div className="sidebar-header">
+            <div className="logo-container">
+              <div className="logo-icon">
+                <img src={ariosLogo} alt="Arios Logo" className="logo-image" />
+              </div>
             </div>
+            <button 
+              className="sidebar-close"
+              onClick={() => setSidebarOpen(false)}
+            >
+              &times;
+            </button>
           </div>
-          <button 
-            className="sidebar-close"
-            onClick={() => setSidebarOpen(false)}
-          >
-            &times;
-          </button>
+          
+          <nav className="sidebar-nav">
+            {filteredNavigation.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`nav-item ${isActive(item.href) ? 'active' : ''}`}
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  <Icon className="nav-icon" />
+                  <span>{item.name}</span>
+                </Link>
+              );
+            })}
+          </nav>
         </div>
-        
-        <nav className="sidebar-nav">
-          {filteredNavigation.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`nav-item ${isActive(item.href) ? 'active' : ''}`}
-                onClick={() => setSidebarOpen(false)}
-              >
-                <Icon className="nav-icon" />
-                <span>{item.name}</span>
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
+      )}
 
       {/* Main Content */}
       <div className="main-content">
         {/* Header */}
         <header className="header">
           <div className="header-left">
-            <button 
-              className="menu-button"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <FiMenu />
-            </button>
+            {user?.role !== 'delivery' && (
+              <button 
+                className="menu-button"
+                onClick={() => setSidebarOpen(true)}
+              >
+                <FiMenu />
+              </button>
+            )}
           </div>
 
           <div className="header-right">
@@ -206,8 +210,8 @@ const Layout = ({ children }) => {
         </main>
       </div>
 
-      {/* Mobile Overlay */}
-      {sidebarOpen && (
+      {/* Mobile Overlay - Hidden for delivery role */}
+      {sidebarOpen && user?.role !== 'delivery' && (
         <div 
           className="mobile-overlay"
           onClick={() => setSidebarOpen(false)}

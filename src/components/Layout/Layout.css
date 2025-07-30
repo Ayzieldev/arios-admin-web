@@ -392,6 +392,12 @@
     width: calc(100% - 280px);
   }
   
+  /* Delivery layout - smaller margin when sidebar is hidden */
+  .delivery-layout .main-content {
+    margin-left: 0px;
+    width: calc(100% - 0px);
+  }
+  
   .menu-button {
     display: none;
   }

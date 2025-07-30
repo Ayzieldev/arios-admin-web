@@ -1,0 +1,76 @@
+# ===========================================
+# ARIOS FRONTEND ENVIRONMENT CONFIGURATION
+# ===========================================
+
+# Copy this content to create your .env files
+# 
+# For local development: Copy to .env.local
+# For production: Copy to .env.production
+# For general use: Copy to .env
+
+# ===========================================
+# DATABASE CONFIGURATION
+# ===========================================
+
+# LOCAL DEVELOPMENT (Uncomment to use local backend)
+REACT_APP_API_URL=http://localhost:5000/api
+
+# PRODUCTION (Uncomment to use Railway backend)
+# REACT_APP_API_URL=https://arios-production.up.railway.app/api
+
+# ===========================================
+# ENVIRONMENT SETTINGS
+# ===========================================
+
+# Environment mode
+REACT_APP_ENV=development
+
+# Debug mode (set to false in production)
+REACT_APP_DEBUG=true
+
+# ===========================================
+# FEATURE FLAGS
+# ===========================================
+
+# Enable/disable features
+REACT_APP_ENABLE_ANALYTICS=false
+REACT_APP_ENABLE_NOTIFICATIONS=true
+
+# ===========================================
+# API TIMEOUT SETTINGS
+# ===========================================
+
+# Request timeout in milliseconds
+REACT_APP_API_TIMEOUT=10000
+
+# ===========================================
+# AUTHENTICATION SETTINGS
+# ===========================================
+
+# JWT token storage key
+REACT_APP_TOKEN_KEY=arios_auth_token
+
+# Session timeout (in minutes)
+REACT_APP_SESSION_TIMEOUT=60
+
+# ===========================================
+# FILE UPLOAD SETTINGS
+# ===========================================
+
+# Maximum file size for uploads (in MB)
+REACT_APP_MAX_FILE_SIZE=5
+
+# Allowed file types
+REACT_APP_ALLOWED_FILE_TYPES=image/jpeg,image/png,image/gif
+
+# ===========================================
+# INSTRUCTIONS FOR SWITCHING ENVIRONMENTS
+# ===========================================
+
+# TO SWITCH TO LOCAL:
+# 1. Comment out the production URL: # REACT_APP_API_URL=https://arios-production.up.railway.app/api
+# 2. Uncomment the local URL: REACT_APP_API_URL=http://localhost:5000/api
+
+# TO SWITCH TO PRODUCTION:
+# 1. Comment out the local URL: # REACT_APP_API_URL=http://localhost:5000/api
+# 2. Uncomment the production URL: REACT_APP_API_URL=https://arios-production.up.railway.app/api 

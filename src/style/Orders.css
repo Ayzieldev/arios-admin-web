@@ -76,6 +76,7 @@
 
 .orders-table th {
   background-color: #f8fafc;
+  color: black!important;
   color: var(--text-primary);
   font-weight: 600;
   text-align: left;
@@ -86,6 +87,7 @@
   letter-spacing: 0.05em;
   display: table-cell;
   cursor: default;
+  width: 20px;
 }
 
 .orders-table thead tr {
@@ -112,7 +114,9 @@
 .orders-table thead tr:focus {
   background-color: #f8fafc !important;
 }
-
+.clickable-cell .order-date {
+  color: black!important;
+}
 .clickable-cell {
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -182,7 +186,7 @@
 
 /* Order Items */
 .order-items {
-  width: 75px;
+  width: 150px;
 }
 
 .order-items span {
@@ -216,6 +220,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-decoration: none;
 }
 
 .status-icon {
@@ -224,7 +229,7 @@
 
 /* Order Date */
 .order-date {
-  width: 140px;
+  width: 250px;
   color: black!important;
   font-size: 0.875rem;
 }
@@ -321,7 +326,7 @@
 .order-details {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .detail-section h3 {
@@ -502,8 +507,6 @@
   width: 150px;
 }
 
-
-
 .requests-count {
   display: inline-flex;
   align-items: center;
@@ -636,7 +639,7 @@
   }
   
   .order-details {
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .orders-tabs {
