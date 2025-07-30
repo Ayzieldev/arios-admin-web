@@ -14,9 +14,19 @@ const Orders = () => {
   const [showModal, setShowModal] = useState(false);
   const [userRole, setUserRole] = useState(null);
   const [activeTab, setActiveTab] = useState('all'); // 'all', 'available', 'assigned', 'requests', 'daily'
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     fetchUserRole();
+    checkMobileScreen();
+    
+    // Add resize listener for mobile detection
+    const handleResize = () => {
+      checkMobileScreen();
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
@@ -43,6 +53,12 @@ const Orders = () => {
     }
   };
 
+  const checkMobileScreen = () => {
+    const mobile = window.innerWidth <= 768;
+    setIsMobile(mobile);
+    console.log('📱 Mobile detection:', mobile ? 'Mobile' : 'Desktop');
+  };
+
   const fetchOrders = async () => {
     try {
       setLoading(true);
@@ -54,13 +70,13 @@ const Orders = () => {
       // Role-based endpoint selection
       console.log('🎯 Current userRole:', userRole, 'activeTab:', activeTab);
       
-      if (userRole === 'delivery') {
-        if (activeTab === 'available') {
-          endpoint = '/orders/delivery/available';
-        } else if (activeTab === 'assigned') {
-          endpoint = '/orders/delivery/assigned';
-        }
-      } else if (userRole === 'customer') {
+             if (userRole === 'delivery') {
+         if (activeTab === 'available') {
+           endpoint = '/orders/delivery/available?status=pending';
+         } else if (activeTab === 'assigned') {
+           endpoint = '/orders/delivery/assigned';
+         }
+       } else if (userRole === 'customer') {
         endpoint = '/orders';
             } else if (userRole === 'admin' && activeTab === 'requests') {
         endpoint = '/orders/delivery-requests';
@@ -448,20 +464,27 @@ const Orders = () => {
           <p>There are no orders to display at the moment.</p>
         </div>
       ) : (
-        <div className="orders-table-container">
-          <table className={`orders-table ${userRole === 'admin' && activeTab === 'requests' ? 'delivery-requests-table' : ''}`}>
+                 <div className="orders-table-container">
+           <table className={`orders-table ${userRole === 'admin' && activeTab === 'requests' ? 'delivery-requests-table' : ''} ${isMobile && userRole === 'delivery' ? 'delivery-mobile' : ''}`}>
             <thead>
               <tr>
-                <th className="order-id">Order ID</th>
+                {/* Hide Order ID for delivery on mobile */}
+                {(!isMobile || userRole !== 'delivery') && (
+                  <th className="order-id">Order ID</th>
+                )}
                 <th className="customer-info">Customer</th>
-                {userRole !== 'admin' || activeTab !== 'requests' ? (
-                  <>
-                    <th className="order-items">Items</th>
-                    <th className="order-total">Total</th>
-                    <th className="order-status">Status</th>
-                  </>
-                ) : null}
-                <th className="order-date">Date</th>
+                                 {/* Show Items, Total, Status columns only if not delivery on mobile */}
+                 {(!isMobile || userRole !== 'delivery') && (userRole !== 'admin' || activeTab !== 'requests') ? (
+                   <>
+                     <th className="order-items">Items</th>
+                     <th className="order-total">Total</th>
+                     <th className="order-status">Status</th>
+                   </>
+                 ) : null}
+                {/* Hide Date for delivery on mobile */}
+                {(!isMobile || userRole !== 'delivery') && (
+                  <th className="order-date">Date</th>
+                )}
                 {userRole === 'admin' && activeTab === 'requests' && (
                   <th className="delivery-requests">Requests</th>
                 )}
@@ -472,13 +495,16 @@ const Orders = () => {
               {orders.map((order) => {
                 return (
                   <tr key={order._id} className="order-row-clickable">
-                    <td 
-                      className="clickable-cell order-id" 
-                      onClick={() => viewOrderDetails(order)}
-                      data-debug="order-id"
-                    >
-                      #{order._id.slice(-6)}
-                    </td>
+                    {/* Hide Order ID for delivery on mobile */}
+                    {(!isMobile || userRole !== 'delivery') && (
+                      <td 
+                        className="clickable-cell order-id" 
+                        onClick={() => viewOrderDetails(order)}
+                        data-debug="order-id"
+                      >
+                        #{order._id.slice(-6)}
+                      </td>
+                    )}
                     <td 
                       className="clickable-cell customer-info" 
                       onClick={() => viewOrderDetails(order)}
@@ -489,41 +515,45 @@ const Orders = () => {
                         <span>{order.user?.email || 'N/A'}</span>
                       </div>
                     </td>
-                    {userRole !== 'admin' || activeTab !== 'requests' ? (
-                      <>
-                        <td 
-                          className="clickable-cell order-items" 
-                          onClick={() => viewOrderDetails(order)}
-                          data-debug="order-items"
-                        >
-                          <span>{order.items?.length || 0} items</span>
-                        </td>
-                        <td 
-                          className="clickable-cell order-total" 
-                          onClick={() => viewOrderDetails(order)}
-                          data-debug="order-total"
-                        >
-                          <strong>₱{order.total?.toFixed(2) || '0.00'}</strong>
-                        </td>
-                        <td 
-                          className="clickable-cell order-status" 
-                          onClick={() => viewOrderDetails(order)}
-                          data-debug="order-status"
-                        >
-                          <span className="status-badge" style={{ backgroundColor: getStatusColor(order.status) }}>
-                            {getStatusIcon(order.status)}
-                            {order.status.replace('_', ' ').toUpperCase()}
-                          </span>
-                        </td>
-                      </>
-                    ) : null}
-                    <td 
-                      className="clickable-cell order-date" 
-                      onClick={() => viewOrderDetails(order)}
-                      data-debug="order-date"
-                    >
-                      {formatDate(order.createdAt)}
-                    </td>
+                                         {/* Show Items, Total, Status columns only if not delivery on mobile */}
+                     {(!isMobile || userRole !== 'delivery') && (userRole !== 'admin' || activeTab !== 'requests') ? (
+                       <>
+                         <td 
+                           className="clickable-cell order-items" 
+                           onClick={() => viewOrderDetails(order)}
+                           data-debug="order-items"
+                         >
+                           <span>{order.items?.length || 0} items</span>
+                         </td>
+                         <td 
+                           className="clickable-cell order-total" 
+                           onClick={() => viewOrderDetails(order)}
+                           data-debug="order-total"
+                         >
+                           <strong>₱{order.total?.toFixed(2) || '0.00'}</strong>
+                         </td>
+                         <td 
+                           className="clickable-cell order-status" 
+                           onClick={() => viewOrderDetails(order)}
+                           data-debug="order-status"
+                         >
+                           <span className="status-badge" style={{ backgroundColor: getStatusColor(order.status) }}>
+                             {getStatusIcon(order.status)}
+                             {order.status.replace('_', ' ').toUpperCase()}
+                           </span>
+                         </td>
+                       </>
+                     ) : null}
+                    {/* Hide Date for delivery on mobile */}
+                    {(!isMobile || userRole !== 'delivery') && (
+                      <td 
+                        className="clickable-cell order-date" 
+                        onClick={() => viewOrderDetails(order)}
+                        data-debug="order-date"
+                      >
+                        {formatDate(order.createdAt)}
+                      </td>
+                    )}
                     {userRole === 'admin' && activeTab === 'requests' && (
                       <td className="delivery-requests">
                         <span className="requests-count">
