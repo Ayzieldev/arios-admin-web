@@ -317,4 +317,11 @@
     width: 100%;
     left: -100%;
   }
+
+  .logout-button {
+    position: absolute;
+    top: 1.5rem;
+    right: 3.5rem;
+    z-index: 10;
+  }
 } 

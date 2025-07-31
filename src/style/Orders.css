@@ -274,7 +274,7 @@
   align-items: center;
   justify-content: center;
   z-index: 10000;
-  padding: 1rem;
+  padding: 0rem;
 }
 
 .modal-content {
@@ -617,7 +617,7 @@
 
 @media (max-width: 768px) {
   .orders {
-    padding: 1rem;
+    padding: 0rem;
   }
   
   .orders-table-container {
