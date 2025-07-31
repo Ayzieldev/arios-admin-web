@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8eb114da.css",
+    "main.js": "/static/js/main.a0167fc9.js",
+    "static/media/Arios Logo.png": "/static/media/Arios Logo.e9628bdd63eddbebda2d.png",
+    "index.html": "/index.html",
+    "main.8eb114da.css.map": "/static/css/main.8eb114da.css.map",
+    "main.a0167fc9.js.map": "/static/js/main.a0167fc9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8eb114da.css",
+    "static/js/main.a0167fc9.js"
+  ]
+}
