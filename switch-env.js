@@ -15,7 +15,7 @@ function switchEnvironment(env) {
     // Comment out production URL and uncomment local URL
     envContent = envContent.replace(
       /REACT_APP_API_URL=https:\/\/arios-production\.up\.railway\.app\/api/g,
-      '# REACT_APP_API_URL=https://arios-production.up.railway.app/api'
+      '# REACT_APP_API_URL=https://arios-back-end-server-production.up.railway.app/api'
     );
     envContent = envContent.replace(
       /# REACT_APP_API_URL=http:\/\/localhost:5000\/api/g,
@@ -30,9 +30,9 @@ function switchEnvironment(env) {
     );
     envContent = envContent.replace(
       /# REACT_APP_API_URL=https:\/\/arios-production\.up\.railway\.app\/api/g,
-      'REACT_APP_API_URL=https://arios-production.up.railway.app/api'
+      'REACT_APP_API_URL=https://arios-back-end-server-production.up.railway.app/api'
     );
-    console.log('✅ Switched to PRODUCTION environment (https://arios-production.up.railway.app/api)');
+    console.log('✅ Switched to PRODUCTION environment (https://arios-back-end-server-production.up.railway.app/api)');
   }
   
   fs.writeFileSync(envPath, envContent);
