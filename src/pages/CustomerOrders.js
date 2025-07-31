@@ -110,7 +110,6 @@ const CustomerOrders = () => {
                   </div>
                 </div>
                 <div className="order-total">
-                  <FiDollarSign />
                   <span>₱{order.total.toFixed(2)}</span>
                 </div>
               </div>

@@ -711,7 +711,7 @@
   
   .order-details {
     gap: 1rem;
-    padding: 0!important;
+    padding: 1rem!important;
   }
 
   .orders-tabs {

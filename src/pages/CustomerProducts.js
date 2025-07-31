@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { FiShoppingCart, FiStar, FiPlus, FiMinus, FiFileText, FiSearch, FiFilter, FiHeart, FiEye } from 'react-icons/fi';
 import { useCustomer } from '../contexts/CustomerContext';
 import { Link } from 'react-router-dom';
@@ -22,7 +22,7 @@ const CustomerProducts = () => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/admin/products/customer');
+      const response = await api.get('/admin/products/customer');
       setProducts(response.data.products);
     } catch (error) {
       toast.error('Failed to fetch products');
