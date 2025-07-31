@@ -17,10 +17,38 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    
+    // Special handling for phone number
+    if (name === 'phone') {
+      // Only allow numbers
+      const numericValue = value.replace(/[^0-9]/g, '');
+      
+      // Limit to 11 digits (Philippine mobile number format)
+      const limitedValue = numericValue.slice(0, 11);
+      
+      setFormData({
+        ...formData,
+        [name]: limitedValue
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    // Prevent non-numeric input for phone field
+    if (e.target.name === 'phone') {
+      const allowedKeys = ['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
+      const isNumeric = /^[0-9]$/.test(e.key);
+      
+      if (!isNumeric && !allowedKeys.includes(e.key)) {
+        e.preventDefault();
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -33,6 +61,17 @@ const Register = () => {
 
     if (formData.password.length < 6) {
       toast.error('Password must be at least 6 characters long');
+      return;
+    }
+
+    // Validate Philippine phone number
+    if (!formData.phone.startsWith('09')) {
+      toast.error('Phone number must start with 09');
+      return;
+    }
+
+    if (formData.phone.length !== 11) {
+      toast.error('Phone number must be exactly 11 digits');
       return;
     }
 
@@ -108,13 +147,23 @@ const Register = () => {
               <input
                 type="tel"
                 name="phone"
-                placeholder="Phone Number"
+                placeholder="09XXXXXXXXX (11 digits)"
                 value={formData.phone}
                 onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 required
                 className="form-input"
+                maxLength="11"
               />
             </div>
+            {formData.phone && formData.phone.length > 0 && (
+              <small className="phone-hint">
+                {formData.phone.length}/11 digits
+                {!formData.phone.startsWith('09') && formData.phone.length > 0 && (
+                  <span className="error-text"> - Must start with 09</span>
+                )}
+              </small>
+            )}
           </div>
 
           <div className="form-group">
