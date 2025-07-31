@@ -84,8 +84,8 @@ const Login = () => {
         <div className="login-footer">
           <p className="demo-info">
             <strong>Demo Credentials:</strong><br />
-            Email: admin@easycash.com<br />
-            Password: admin123
+            Email: admin@arioscafe.com<br />
+            Password: arioscafe
           </p>
           <p className="register-link">
             Don't have an account?{' '}
