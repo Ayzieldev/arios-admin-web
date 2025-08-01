@@ -56,7 +56,7 @@ const CustomerCart = () => {
     try {
       const orderData = {
         items: cart.items.map(item => ({
-          product: item.product._id,
+          product: item.product?._id,
           quantity: item.quantity,
           price: item.price
         })),
@@ -127,11 +127,11 @@ const CustomerCart = () => {
         <div className="cart-items">
           
           {cart.items.map((item) => (
-            <div key={item.product._id} className="cart-item">
+            <div key={item.product?._id || `item-${Math.random()}`} className="cart-item">
               <div className="item-image">
                 <img
-                  src={item.product.images[0] || '/placeholder-product.jpg'}
-                  alt={item.product.name}
+                  src={item.product?.images?.[0] || '/placeholder-product.jpg'}
+                  alt={item.product?.name || 'Product'}
                   onError={(e) => {
                     e.target.src = '/placeholder-product.jpg';
                   }}
@@ -139,24 +139,24 @@ const CustomerCart = () => {
               </div>
               
               <div className="item-details">
-                <h3>{item.product.name}</h3>
-                <p className="item-description">{item.product.description}</p>
+                <h3>{item.product?.name || 'Product Unavailable'}</h3>
+                <p className="item-description">{item.product?.description || 'No description available'}</p>
                 <p className="item-price">${item.price}</p>
               </div>
               
               <div className="item-quantity">
                 <button
-                  onClick={() => handleQuantityChange(item.product._id, item.quantity - 1)}
+                  onClick={() => handleQuantityChange(item.product?._id, item.quantity - 1)}
                   className="quantity-btn"
-                  disabled={cartLoading}
+                  disabled={cartLoading || !item.product?._id}
                 >
                   <FiMinus />
                 </button>
                 <span className="quantity">{item.quantity}</span>
                 <button
-                  onClick={() => handleQuantityChange(item.product._id, item.quantity + 1)}
+                  onClick={() => handleQuantityChange(item.product?._id, item.quantity + 1)}
                   className="quantity-btn"
-                  disabled={cartLoading}
+                  disabled={cartLoading || !item.product?._id}
                 >
                   <FiPlus />
                 </button>
@@ -167,9 +167,9 @@ const CustomerCart = () => {
               </div>
               
               <button
-                onClick={() => handleRemoveItem(item.product._id)}
+                onClick={() => handleRemoveItem(item.product?._id)}
                 className="remove-btn"
-                disabled={cartLoading}
+                disabled={cartLoading || !item.product?._id}
               >
                 <FiTrash2 />
               </button>

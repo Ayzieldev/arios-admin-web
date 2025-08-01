@@ -131,7 +131,9 @@ const CustomerOrders = () => {
                     {order.items.map((item, index) => (
                       <div key={index} className="order-item">
                         <div className="item-info">
-                          <span className="item-name">{item.product.name}</span>
+                          <span className="item-name">
+                            {item.product ? item.product.name : 'Product Unavailable'}
+                          </span>
                           <span className="item-quantity">Qty: {item.quantity}</span>
                         </div>
                         <span className="item-price">₱{item.price.toFixed(2)}</span>
