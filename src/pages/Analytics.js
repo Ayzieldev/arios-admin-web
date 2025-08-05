@@ -282,7 +282,7 @@ const Analytics = () => {
       <div className="summary-cards">
         <div className="summary-card">
           <div className="summary-icon revenue">
-            <FiDollarSign />
+            <span>&#8369;</span>
           </div>
           <div className="summary-content">
             <h3>{formatCurrency(analyticsData?.summaryStats?.totalRevenue || 0)}</h3>
